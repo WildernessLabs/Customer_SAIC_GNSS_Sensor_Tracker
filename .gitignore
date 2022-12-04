@@ -353,4 +353,4 @@ MigrationBackup/
 **/.DS_Store
 
 ## WiFi secrets
-**/WiFiSecrets.cs
+Source/Firmware/GNSS_Tracker/Demo_App/WiFiSecrets.cs
