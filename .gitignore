@@ -352,5 +352,5 @@ MigrationBackup/
 ## Mac Bullshit
 **/.DS_Store
 
-## WiFi and other secrets
-**/**Secrets.cs
+## WiFi secrets
+**/WiFiSecrets.cs
