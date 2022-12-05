@@ -16,11 +16,17 @@ namespace Demo_App.Controllers
         protected GnssTrackerHardware Hardware { get; set; }
         protected AtmosphericModel? LastAtmosphericConditions { get; set; }
         protected LocationModel? LastLocationInfo { get; set; }
+        protected IoBTController IoBTController { get; set; }
 
         public MainTrackerController(GnssTrackerHardware hardware)
         {
             this.Hardware = hardware;
             GnssController.GnssPositionInfoUpdated += GnssPositionInfoUpdated;
+
+            var panID = "Wilderness Labs - Portland";
+            Guid sensorID = Guid.Parse("d5505ddc-8d3e-43e5-ab3e-04ca0e4e5d08");
+
+            IoBTController = new IoBTController(panID, sensorID);
         }
 
         /// <summary>
@@ -80,6 +86,7 @@ namespace Demo_App.Controllers
             //---- update the display and save to the database
             DatabaseController.SaveLocationInfo(LastLocationInfo);
             DisplayController.UpdateGnssPositionInformation(LastLocationInfo);
+            IoBTController.PostLocation(LastLocationInfo);
         }
 
         void AtmosphericSensorUpdated(object sender, IChangeResult<(Meadow.Units.Temperature? Temperature, Meadow.Units.RelativeHumidity? Humidity, Meadow.Units.Pressure? Pressure, Meadow.Units.Resistance? GasResistance)> result)
@@ -102,6 +109,7 @@ namespace Demo_App.Controllers
             //---- update display and save to database
             DatabaseController.SaveAtmosphericConditions(this.LastAtmosphericConditions);
             DisplayController.UpdateAtmosphericConditions(this.LastAtmosphericConditions);
+            IoBTController.PostAtmosphericConditions(this.LastAtmosphericConditions);
         }
     }
 }

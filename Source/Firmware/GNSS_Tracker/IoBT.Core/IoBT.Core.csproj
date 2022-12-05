@@ -1,0 +1,21 @@
+<Project Sdk="Meadow.Sdk/1.1.0">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyName>IoBT.Core</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Meadow.Foundation" Version="0.*" />
+    <PackageReference Include="Refit" Version="6.3.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ApiModels\" />
+    <None Remove="Refit" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ApiModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Meadow.GnssTracker.Core\Meadow.GnssTracker.Core.csproj" />
+  </ItemGroup>
+</Project>
