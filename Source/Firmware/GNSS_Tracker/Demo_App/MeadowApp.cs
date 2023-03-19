@@ -62,20 +62,20 @@ namespace Demo_App
             // connected event test.
             wifi.NetworkConnected += Wifi_NetworkConnected;
 
-            var connectionResult = await wifi.Connect(Secrets.WIFI_NAME, Secrets.WIFI_PASSWORD, TimeSpan.FromSeconds(45));
-
-            if (connectionResult.ConnectionStatus != ConnectionStatus.Success)
+            try
             {
-                throw new Exception($"Cannot connect to network: {connectionResult.ConnectionStatus}");
+                await wifi.Connect(Secrets.WIFI_NAME, Secrets.WIFI_PASSWORD, TimeSpan.FromSeconds(45));
             }
-            else
+            catch (Exception e)
             {
-                DisplayNetworkInformation();
+                Resolver.Log.Error(e.Message);
             }
         }
 
         private void Wifi_NetworkConnected(INetworkAdapter sender, NetworkConnectionEventArgs args)
         {
+            DisplayNetworkInformation();
+
             Log?.Info("Connection request completed.");
         }
 
